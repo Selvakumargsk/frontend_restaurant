@@ -8,7 +8,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import Logo from "../../images/logo.svg";
+import Logo from "../../images/logo.png";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
@@ -89,6 +89,9 @@ const Header = () => {
                 </li>
                 <li>
                   <NavLink to={"/contact"}>Contact</NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/signin"}>Signin</NavLink>
                 </li>
               </ul>
             </Box>

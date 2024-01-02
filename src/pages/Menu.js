@@ -13,7 +13,7 @@ import {
 const Menu = () => {
   return (
     <Layout>
-      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" , marginTop: '2%' }}>
         {MenuList.map((menu) => (
           <Card sx={{ maxWidth: "390px", display: "flex", m: 2 }}>
             <CardActionArea>
