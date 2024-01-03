@@ -1,28 +1,93 @@
-import React from "react";
-import Layout from "./../components/Layout/Layout";
-import { Link } from "react-router-dom";
-import { Paper, TextField } from "@mui/material";
+import React from 'react';
+import { Button, Container, Grid, Paper, TextField } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ApiService from '../services/apiservice';
+import Cookies from 'js-cookie';
 
-const Signin = () => {
+
+const SignIn = () => {
+  const [values, setValues] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if ((Object.keys(values).length < 2) || values.email === '' || values.password === '') {
+      toast('please fill all the details to continue')
+    } else {
+      try {
+        const response = await ApiService.post('/login', values);
+        setLoading(true);
+        if (response.status === 201) {
+          setLoading(false);
+          Cookies.set('userId', response.data.user.id, { expires: 7 });        
+          Cookies.set('token', response.data.token, { expires: 7 });        
+          navigate('/');
+        } else {
+          setLoading(false);
+          toast.error(response.data.msg);
+        }
+
+      } catch (err) {
+        toast.error(err.response.data.msg);
+      }
+    }
+
+  }
+
+  const handleChange = (e) => {
+    setValues((val) => ({ ...val, [e.target.name]: e.target.value }));
+  }
+
   return (
-        <Paper className="mt-[5%] flex flex-col justify-center   items-center ">
-        <TextField
-        variant="standard"
-          required
-          // className="max-w-[320px]"
-          label="Enter your email or username"
-        />
-        <TextField
-        variant="standard"
-          required
-          className="max-w-[320px]"
-          type="password"
-          label="password"
-        />
-           
-        </Paper>
-     
+    <Container component="main" maxWidth="md" className='h-screen flex justify-center items-center'>
+      <Grid container className='flex flex-column h-[90vh] w-full items-center justify-center'>
+
+        <Grid item xs={12} sm={6} md={6} component={Paper} elevation={6} square className='rounded-xl'>
+          <div className='p-4 '>
+            <h2>Sign In</h2>
+
+            <form>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Email Address"
+                name="email"
+                onChange={handleChange}
+                autoComplete="email"
+              />
+
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                onChange={handleChange}
+                autoComplete="current-password"
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                {loading ? <div className="spinner-border text-light" role="status">
+                  <span className="sr-only"></span>
+                </div> : 'Sign In'}
+              </Button>
+              <span className='flex justify-center mt-1'>First time user? <Link to='/register' className='font-bold no-underline'>Sign up here</Link></span>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
-export default Signin;
+export default SignIn;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   AppBar,
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -11,14 +12,23 @@ import {
 import Logo from "../../images/logo.png";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/HeaderStyles.css";
+import { deleteCookies, getUserId } from "../../services/sessionProvider";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
   // hndle menu click
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+const handleSignout = ()=>{
+  deleteCookies();
+  navigate('/');
+}
+  
+
   //menu drawer
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -91,7 +101,10 @@ const Header = () => {
                   <NavLink to={"/contact"}>Contact</NavLink>
                 </li>
                 <li>
-                  <NavLink to={"/signin"}>Signin</NavLink>
+                  {getUserId() ? <Button 
+                  className="mt-2"
+                variant="contained"
+                color="warning" onClick={handleSignout}>Signout</Button>:<NavLink to={"/signin"}>Signin</NavLink>}
                 </li>
               </ul>
             </Box>
