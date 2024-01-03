@@ -7,8 +7,16 @@ export const getUserId = ()=>{
 export const getToken = () =>{
     return Cookies.get().token;
 }
+export const getAdminId = () =>{
+    return Cookies.get().adminId;
+}
 
 export const deleteCookies = () => {
     Cookies.remove('userId');
+    Cookies.remove('token');
+}
+
+export const deleteAdmin = () => {
+    Cookies.remove('adminId');
     Cookies.remove('token');
 }

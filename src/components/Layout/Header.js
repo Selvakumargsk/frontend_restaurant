@@ -14,7 +14,7 @@ import Logo from "../../images/logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/HeaderStyles.css";
-import { deleteCookies, getUserId } from "../../services/sessionProvider";
+import { deleteAdmin, deleteCookies, getAdminId, getUserId } from "../../services/sessionProvider";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
@@ -28,6 +28,10 @@ const handleSignout = ()=>{
   navigate('/');
 }
   
+const handleAdmin = () =>{
+  deleteAdmin();
+  navigate('/'); 
+}
 
   //menu drawer
   const drawer = (
@@ -100,11 +104,18 @@ const handleSignout = ()=>{
                 <li>
                   <NavLink to={"/contact"}>Contact</NavLink>
                 </li>
-                <li>
+               {getAdminId() && <li>
+                  <NavLink to={"/bookingDetails"}>bookingDetails</NavLink>
+                </li>}
+               {!getAdminId() && <li>
                   {getUserId() ? <Button 
                   className="mt-2"
                 variant="contained"
                 color="warning" onClick={handleSignout}>Signout</Button>:<NavLink to={"/signin"}>Signin</NavLink>}
+                </li>}
+                <li>
+                  {getAdminId() ? <Button variant="contained"
+                color="warning" onClick={handleAdmin}>Admin Signout</Button> : <NavLink to={"/signin"}>Signin</NavLink>}
                 </li>
               </ul>
             </Box>

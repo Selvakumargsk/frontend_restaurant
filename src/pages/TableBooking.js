@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Button, FormControl, Grid, MenuItem, Select, TextField, Typography } from '@mui/material';
 import Layout from '../components/Layout/Layout';
+import { toast } from 'react-toastify';
+import ApiService from '../services/apiservice';
+import { getUserId } from '../services/sessionProvider';
 
 const TableBookingForm = () => {
     const [formData, setFormData] = useState({
@@ -21,9 +24,38 @@ const TableBookingForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        const isFormDataValid = Object.values(formData).some(value => value === '');
+        if(isFormDataValid){
+            toast.error('Please fill in all details to book your table');
+        }else{
+            if(getUserId()){
+                try{
+                    const response = await ApiService.post('/bookTable' , {...formData , userId : getUserId()});
+
+                    if(response.status === 201 ){
+                        toast.success('Table booking request raised');
+                        setFormData({
+                            tableNumber: '',
+                            adults: '',
+                            children: '',
+                            bookingDate: '',
+                            bookingTime: '',
+                            phoneNumber: '',
+                            customerName: '',
+                        });
+
+                    }else{
+                        toast.error('error occured');
+                    }
+                }catch(err){
+                    console.log(err);
+                }
+            }else{
+                toast.error('please login to book table')
+            }
+        }
     };
 
     return (

@@ -18,11 +18,17 @@ const SignIn = () => {
     } else {
       try {
         const response = await ApiService.post('/login', values);
+        console.log(response);
         setLoading(true);
         if (response.status === 201) {
           setLoading(false);
-          Cookies.set('userId', response.data.user.id, { expires: 7 });        
-          Cookies.set('token', response.data.token, { expires: 7 });        
+          if(response.data.role === 'admin'){
+            Cookies.set('adminId' , response.data.admin.id , {expires : 7});
+            Cookies.set('token', response.data.token, { expires: 7 });        
+          }else{
+            Cookies.set('userId', response.data.user.id, { expires: 7 });        
+            Cookies.set('token', response.data.token, { expires: 7 });        
+          }
           navigate('/');
         } else {
           setLoading(false);
@@ -30,7 +36,7 @@ const SignIn = () => {
         }
 
       } catch (err) {
-        toast.error(err.response.data.msg);
+        toast.error(err?.response?.data?.msg);
       }
     }
 
