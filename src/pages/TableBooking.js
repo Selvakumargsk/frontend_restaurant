@@ -15,6 +15,8 @@ const TableBookingForm = () => {
         phoneNumber: '',
         customerName: '',
     });
+    const today = new Date().toISOString().split('T')[0];
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,6 +60,7 @@ const TableBookingForm = () => {
         }
     };
 
+
     return (
         <Layout>
             <form onSubmit={handleSubmit} className='my-[5%] mx-[10%]'>
@@ -99,6 +102,7 @@ const TableBookingForm = () => {
                             onChange={handleChange}
                             fullWidth
                             className='mb-2'
+                            InputProps={{ inputProps: { min: 1, max: 4 } }}
                         />
                     </Grid>
 
@@ -111,6 +115,7 @@ const TableBookingForm = () => {
                             onChange={handleChange}
                             fullWidth
                             className='mb-2'
+                            InputProps={{ inputProps: { min: 1, max: 4 } }}
                         />
                     </Grid>
                 </Grid>
@@ -125,6 +130,7 @@ const TableBookingForm = () => {
                             onChange={handleChange}
                             fullWidth
                             className='mb-2'
+                            InputProps={{ inputProps: { min: today } }}
                         />
                     </Grid>
 

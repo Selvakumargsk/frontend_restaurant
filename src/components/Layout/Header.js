@@ -60,6 +60,22 @@ const handleAdmin = () =>{
         <li>
           <NavLink to={"/contact"}>Contact</NavLink>
         </li>
+        {getAdminId() && <li>
+                  <NavLink to={"/bookingDetails"}>bookingDetails</NavLink>
+                </li>}
+                {getUserId() ?<li>
+                   <Button 
+                  className="mt-2"
+                variant="contained"
+                color="warning" onClick={handleSignout}>Signout</Button>  </li> :null}
+              
+              {getAdminId() ?  <li>
+                <Button variant="contained"
+                color="warning" onClick={handleAdmin}>Admin Signout</Button>   </li> : null}
+             
+                <li>
+                  {!getUserId()&& !getAdminId() && <NavLink to={"/signin"}>Signin</NavLink>}
+                </li>
       </ul>
     </Box>
   );
@@ -107,15 +123,18 @@ const handleAdmin = () =>{
                {getAdminId() && <li>
                   <NavLink to={"/bookingDetails"}>bookingDetails</NavLink>
                 </li>}
-               {!getAdminId() && <li>
-                  {getUserId() ? <Button 
+                {getUserId() ?<li>
+                   <Button 
                   className="mt-2"
                 variant="contained"
-                color="warning" onClick={handleSignout}>Signout</Button>:<NavLink to={"/signin"}>Signin</NavLink>}
-                </li>}
+                color="warning" onClick={handleSignout}>Signout</Button>  </li> :null}
+              
+              {getAdminId() ?  <li>
+                <Button variant="contained"
+                color="warning" onClick={handleAdmin}>Admin Signout</Button>   </li> : null}
+             
                 <li>
-                  {getAdminId() ? <Button variant="contained"
-                color="warning" onClick={handleAdmin}>Admin Signout</Button> : <NavLink to={"/signin"}>Signin</NavLink>}
+                  {!getUserId()&& !getAdminId() && <NavLink to={"/signin"}>Signin</NavLink>}
                 </li>
               </ul>
             </Box>
