@@ -12,6 +12,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BookingDetails from "./pages/bookingDetails";
+import Users from "./pages/users";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/book" element={<TableBookingForm />} />
           <Route path="/bookingDetails" element={<BookingDetails />} />
+          <Route path="/users" element={<Users />} />
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
         <ToastContainer />

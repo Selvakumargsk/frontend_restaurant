@@ -3,8 +3,8 @@ import { getAdminId } from '../services/sessionProvider';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../services/apiservice';
 import { toast } from 'react-toastify';
-import Layout from '../components/Layout/Layout';
 import { DataGrid } from '@mui/x-data-grid';
+import VerticalLayout from '../components/verticalLayout/verticalNav';
 
 const BookingDetails = () => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const BookingDetails = () => {
   }, [values]);
 
   return (
-    <Layout>
+    <VerticalLayout>
       <div style={{ height: '70vh', width: '100%', marginTop: '3%' }}>
       <DataGrid
   rows={rows}
@@ -58,7 +58,7 @@ const BookingDetails = () => {
   checkboxSelection
 />
 </div>
-    </Layout>
+    </VerticalLayout>
   );
 };
 

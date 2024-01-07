@@ -10,6 +10,7 @@ const RegisterForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
+  const [username, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const RegisterForm = () => {
   const handleSubmit = async() => {
     console.log('Form submitted');
     try{
-        const response = await ApiService.post('/register' , {email , password , confirmPassword});
+        const response = await ApiService.post('/register' , {email , password , confirmPassword , username});
         if(response.status === 201){
             toast.success('registered successfully , please login to continue')
             navigate('/signin');
@@ -106,6 +107,16 @@ const RegisterForm = () => {
                 )}
                 {activeStep === 2 && (
                   <>
+                    
+                    <TextField
+                      variant="outlined"
+                      margin="normal"
+                      fullWidth
+                      label="User name"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setName(e.target.value)}
+                    />
                     <TextField
                       variant="outlined"
                       margin="normal"
